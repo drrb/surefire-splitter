@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.github.tlb.sampleprojects.SimpleCalculatorTest" time="0.016" tests="9" errors="0" skipped="0" failures="1">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+  </properties>
+  <testcase name="shouldReturnTheDifferenceOfTwoNegetiveNumbers" classname="com.github.tlb.sampleprojects.SimpleCalculatorTest" time="0.008"/>
+  <testcase name="shouldReturnTheQuotientOfTwoNumbers" classname="com.github.tlb.sampleprojects.SimpleCalculatorTest" time="0"/>
+  <testcase name="shouldReturnTheProductOfAPositiveAndANegetiveNumber" classname="com.github.tlb.sampleprojects.SimpleCalculatorTest" time="0"/>
+  <testcase name="shouldFailForStupidReason" classname="com.github.tlb.sampleprojects.SimpleCalculatorTest" time="0.005">
+    <failure message="&#10;Expected: is &lt;1&gt;&#10;     but: was &lt;0&gt;" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError: 
+
+Expected: is <1>
+     but: was <0>
+	at com.github.tlb.sampleprojects.SimpleCalculatorTest.shouldFailForStupidReason(SimpleCalculatorTest.java:52)
+]]></failure>
+  </testcase>
+  <testcase name="shouldReturnTheSumOfTwoNegetiveNumbers" classname="com.github.tlb.sampleprojects.SimpleCalculatorTest" time="0"/>
+  <testcase name="shouldReturnTheSumOfTwoNumbers" classname="com.github.tlb.sampleprojects.SimpleCalculatorTest" time="0"/>
+  <testcase name="shouldReturnTheDifferenceOfTwoNumbers" classname="com.github.tlb.sampleprojects.SimpleCalculatorTest" time="0"/>
+  <testcase name="shouldReturnTheQuotientOfPositiveNumberWithNegetiveNumber" classname="com.github.tlb.sampleprojects.SimpleCalculatorTest" time="0"/>
+  <testcase name="shouldReturnTheProductOfTwoNumbers" classname="com.github.tlb.sampleprojects.SimpleCalculatorTest" time="0"/>
+</testsuite>

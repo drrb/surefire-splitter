@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.github.tlb.sampleprojects.CommutativeTest" time="0.012" tests="4" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+  </properties>
+  <testcase name="shouldShowThatDivisionIsNotCommutative" classname="com.github.tlb.sampleprojects.CommutativeTest" time="0.007"/>
+  <testcase name="shouldShowThatSubtractionIsNotCommutative" classname="com.github.tlb.sampleprojects.CommutativeTest" time="0"/>
+  <testcase name="shouldShowThatAdditionIsCommutative" classname="com.github.tlb.sampleprojects.CommutativeTest" time="0"/>
+  <testcase name="shouldShowThatMultiplicationIsCommutative" classname="com.github.tlb.sampleprojects.CommutativeTest" time="0.001"/>
+</testsuite>

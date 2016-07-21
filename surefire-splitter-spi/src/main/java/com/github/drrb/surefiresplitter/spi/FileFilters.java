@@ -1,0 +1,41 @@
+/**
+ * surefire-splitter-spi
+ * Copyright (C) 2016 drrb
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with surefire-splitter-spi. If not, see <http://www.gnu.org/licenses />.
+ */
+package com.github.drrb.surefiresplitter.spi;
+
+import java.io.File;
+import java.io.FilenameFilter;
+
+public class FileFilters {
+
+    public static final FilenameFilter SUREFIRE_REPORT_FILES = new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String name) {
+            return name.startsWith("TEST-") && name.endsWith(".xml");
+        }
+    };
+
+    public static final FilenameFilter XML_FILES = new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String name) {
+            return name.endsWith(".xml");
+        }
+    };
+
+    private FileFilters() {
+    }
+}

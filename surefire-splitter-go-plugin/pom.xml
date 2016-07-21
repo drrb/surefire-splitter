@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Surefire Splitter Go Plugin
+    Copyright (C) 2016 drrb
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Surefire Splitter Go Plugin. If not, see <http://www.gnu.org/licenses />.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.drrb</groupId>
+        <artifactId>surefire-splitter-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>surefire-splitter-go-plugin</artifactId>
+
+    <name>Surefire Splitter Go Plugin</name>
+    <description>
+        A Surefire Splitter plugin that supports build splitting on a GoCD
+        server. When run in a parallelized job on Go, this plugin automatically
+        gets report history from previous job runs and runs only an appropriate
+        fraction of the tests. For example, when run on a job that runs across
+        10 agents, the plugin ensures that only 1/10 of the tests run on each
+        agent, split up in a way that minimizes the test run time for each job.
+
+        If your Go server is set up with user accounts, you will need to set
+        the following environment variables in Go (make sure they're *secure*
+        environment variables):
+
+        GO_USERNAME: the username of an account with the ability to read
+        artifacts from past builds.
+        GO_PASSWORD: that account's password.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.drrb</groupId>
+            <artifactId>surefire-splitter-spi</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>mockwebserver</artifactId>
+            <version>2.5.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.50</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
