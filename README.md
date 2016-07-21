@@ -109,7 +109,7 @@ This project was inspired by Test Load Balancer. It used TLB's example project t
 
 Surefire Splitter
 
-Copyright (C) 2015 drrb
+Copyright (C) 2016 drrb
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

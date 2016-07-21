@@ -1,7 +1,7 @@
 <#--
 
     surefire-splitter
-    Copyright (C) 2015 drrb
+    Copyright (C) 2016 drrb
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 -->
 Surefire Splitter
-Copyright (C) 2015 drrb
+Copyright (C) 2016 drrb
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
