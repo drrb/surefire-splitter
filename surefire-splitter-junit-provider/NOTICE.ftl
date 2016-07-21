@@ -34,6 +34,7 @@ You should have received a copy of the GNU General Public License
 along with Surefire Splitter. If not, see <http://www.gnu.org/licenses/>.
 
 This project includes:
+  - Some code copied from the Surefire Maven Plugin, and modified, under Apache License, Version 2.0
 <#list dependencyMap as entry>
     <#assign project = entry.getKey()/>
     <#assign licenses = entry.getValue()/>
