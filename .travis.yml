@@ -3,13 +3,8 @@ language: java
 os:
     - linux
     - osx
+
 jdk:
     - oraclejdk8
     - oraclejdk7
     - openjdk7
-
-install:
-    - travis_retry mvn --batch-mode dependency:go-offline
-    - mvn --batch-mode package -DskipTests
-
-script: mvn --batch-mode package
