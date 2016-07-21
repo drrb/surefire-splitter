@@ -103,7 +103,7 @@ mvn test -Dsurefire.totalChunks=5 -Dsurefire.chunkNumber=1 -Dsurefire.existingRe
 
 ## Acknowledgement
 
-This project was inspired by Test Load Balancer. It used TLB's example project to generate some test data.
+This project was inspired by [Test Load Balancer](https://test-load-balancer.github.io/). It used TLB's example project to generate some test data.
 
 ## License
 
