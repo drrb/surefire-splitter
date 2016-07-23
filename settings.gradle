@@ -1,0 +1,12 @@
+rootProject.name = 'surefire-splitter-parent'
+include ':surefire-splitter'
+include ':surefire-splitter-file-plugin'
+include ':surefire-splitter-go-plugin'
+include ':surefire-splitter-spi'
+include ':surefire-splitter-junit-provider'
+
+project(':surefire-splitter').projectDir = "$rootDir/surefire-splitter" as File
+project(':surefire-splitter-file-plugin').projectDir = "$rootDir/surefire-splitter-file-plugin" as File
+project(':surefire-splitter-go-plugin').projectDir = "$rootDir/surefire-splitter-go-plugin" as File
+project(':surefire-splitter-spi').projectDir = "$rootDir/surefire-splitter-spi" as File
+project(':surefire-splitter-junit-provider').projectDir = "$rootDir/surefire-splitter-junit-provider" as File

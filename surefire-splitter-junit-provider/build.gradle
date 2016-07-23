@@ -1,0 +1,13 @@
+plugins {
+  id "nebula.provided-base" version "2.2.2"
+}
+
+description = 'Surefire Splitter JUnit provider'
+
+dependencies {
+  compile project(':surefire-splitter')
+  compile group: 'org.apache.maven.surefire', name: 'surefire-api', version: '2.19'
+  compile group: 'org.apache.maven.surefire', name: 'common-java5', version: '2.19'
+  compile group: 'org.apache.maven.surefire', name: 'common-junit4', version: '2.19'
+  provided 'junit:junit:4.12'
+}

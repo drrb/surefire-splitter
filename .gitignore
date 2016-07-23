@@ -4,3 +4,8 @@ target
 *.iml
 *.jks
 /TODO.yaml
+
+# Gradle stuff
+/.gradle
+/gradle/
+build/
