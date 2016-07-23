@@ -27,10 +27,12 @@ import static java.nio.file.Files.isDirectory;
 
 public class GoAgent {
     private final Map<String, String> env;
+    private final int numberOfRunsToLookBackForReports;
     private final Path baseDir;
 
-    public GoAgent(Map<String, String> env, Path workingDir) {
+    public GoAgent(Map<String, String> env, Path workingDir, int numberOfRunsToLookBackForReports) {
         this.env = env;
+        this.numberOfRunsToLookBackForReports = numberOfRunsToLookBackForReports;
         this.baseDir = findBaseDir(workingDir);
     }
 
@@ -115,5 +117,9 @@ public class GoAgent {
 
     private Path getAgentConfigFile(String fileName) {
         return baseDir.resolve("config").resolve(fileName);
+    }
+
+    public int getNumberOfRunsToLookBackForReports() {
+        return numberOfRunsToLookBackForReports;
     }
 }

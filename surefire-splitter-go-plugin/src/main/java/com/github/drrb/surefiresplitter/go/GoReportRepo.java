@@ -31,9 +31,12 @@ import static com.github.drrb.surefiresplitter.spi.FileFilters.SUREFIRE_REPORT_F
 
 public class GoReportRepo implements ReportRepo {
 
+    private static final int DEFAULT_NUMBER_OF_RUNS_TO_LOOK_BACK_FOR_REPORTS = 2;
+
     public static class Provider implements ReportRepoProvider {
         private final Map<String, String> env;
         private final Path workingDir;
+        private final int numberOfRunsToLookBackForReports;
 
         @SuppressWarnings("unused") // Used by plugin SPI
         public Provider() {
@@ -41,8 +44,13 @@ public class GoReportRepo implements ReportRepo {
         }
 
         Provider(Map<String, String> env, Path workingDir) {
+            this(env, workingDir, DEFAULT_NUMBER_OF_RUNS_TO_LOOK_BACK_FOR_REPORTS);
+        }
+
+        Provider(Map<String, String> env, Path workingDir, int numberOfRunsToLookBackForReports) {
             this.env = env;
             this.workingDir = workingDir;
+            this.numberOfRunsToLookBackForReports = numberOfRunsToLookBackForReports;
         }
 
         @Override
@@ -52,7 +60,7 @@ public class GoReportRepo implements ReportRepo {
 
         @Override
         public ReportRepo getExistingReports() {
-            return new GoReportRepo(new GoAgent(env, workingDir));
+            return new GoReportRepo(new GoAgent(env, workingDir, numberOfRunsToLookBackForReports));
         }
 
         @Override

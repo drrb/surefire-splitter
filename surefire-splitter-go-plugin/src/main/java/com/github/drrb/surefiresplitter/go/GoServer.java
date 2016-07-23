@@ -52,9 +52,11 @@ public class GoServer {
     private final String password;
     private final OkHttpClient httpClient;
     private final DownloadCache downloadCache;
+    private final int numberOfRunsToLookBackForReports;
 
     public GoServer(GoAgent config) {
         this.baseUrl = config.getGoServerUrl();
+        this.numberOfRunsToLookBackForReports = config.getNumberOfRunsToLookBackForReports();
         this.downloadCache = DownloadCache.create(baseUrl, config.getPipelinesDir().resolve(".go-downloads"));
         this.username = config.getServerUsername();
         this.password = config.getServerPassword();
@@ -83,7 +85,12 @@ public class GoServer {
 
     private List<StageResult> getPreviousStageRuns(String pipelineName, String stageName) throws CommunicationError {
         try (ResponseBody response = get(url("/api/stages/%s/%s/history", pipelineName, stageName))) {
-            return StageHistory.fromJson(response.string()).getStages();
+            List<StageResult> stages = StageHistory.fromJson(response.string()).getStages();
+            if (stages.size() <= numberOfRunsToLookBackForReports) {
+                return stages;
+            } else {
+                return stages.subList(0, numberOfRunsToLookBackForReports);
+            }
         } catch (IOException e) {
             throw new CommunicationError(String.format("Failed to download stage history for %s/%s", pipelineName, stageName));
         }

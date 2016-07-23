@@ -39,6 +39,7 @@ import static com.squareup.okhttp.mockwebserver.SocketPolicy.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.rules.ExpectedException.none;
 
 public class GoReportRepoTest {
@@ -123,6 +124,25 @@ public class GoReportRepoTest {
         assertThat(testSuites.get(3).getTime(), is(0.044));
         assertThat(testSuites.get(4).getName(), is("com.example.myproject.FifthTest"));
         assertThat(testSuites.get(4).getTime(), is(0.005));
+    }
+
+    @Test
+    public void shouldOnlyLookAsFarBackInHistoryAsConfigured() throws Exception {
+        Map<String, String> nextRunEnv = new HashMap<>(ENV_ON_GO);
+        nextRunEnv.put("GO_PIPELINE_COUNTER", "543");
+        GoReportRepo.Provider provider = new GoReportRepo.Provider(nextRunEnv, workingDir, 1);
+        assertThat(provider.isAvailable(), is(true));
+
+        List<JunitTestSuite> testSuites = provider.getExistingReports().getTestSuites();
+        assertThat(testSuites.size(), is(4));
+        assertThat(testSuites.get(0).getName(), is("com.example.myproject.FirstTest"));
+        assertThat(testSuites.get(0).getTime(), is(0.011));
+        assertThat(testSuites.get(1).getName(), is("com.example.myproject.SecondTest"));
+        assertThat(testSuites.get(1).getTime(), is(0.022));
+        assertThat(testSuites.get(2).getName(), is("com.example.myproject.ThirdTest"));
+        assertThat(testSuites.get(2).getTime(), is(0.033));
+        assertThat(testSuites.get(3).getName(), is("com.example.myproject.FourthTest"));
+        assertThat(testSuites.get(3).getTime(), is(0.044));
     }
 
     @Test
