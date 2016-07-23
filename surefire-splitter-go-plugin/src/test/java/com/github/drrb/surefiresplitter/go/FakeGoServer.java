@@ -150,7 +150,6 @@ public class FakeGoServer extends TestWatcher {
                     } else if (stageFile.getName().equals("stage-result.txt")) {
                         try {
                             result = new String(Files.readAllBytes(stageFile.toPath()), UTF_8).trim();
-                            System.out.println("result = " + result);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
