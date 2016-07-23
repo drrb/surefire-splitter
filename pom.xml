@@ -101,6 +101,7 @@
                         <exclude>**/NOTICE.ftl</exclude>
                         <!-- Test data -->
                         <exclude>**/TEST-*.xml</exclude>
+                        <exclude>**/stage-result.txt</exclude>
                         <exclude>**/cruise-output/**</exclude>
                     </excludes>
                 </configuration>

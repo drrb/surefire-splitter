@@ -31,7 +31,7 @@ import static com.github.drrb.surefiresplitter.spi.FileFilters.SUREFIRE_REPORT_F
 
 public class GoReportRepo implements ReportRepo {
 
-    private static final int DEFAULT_NUMBER_OF_RUNS_TO_LOOK_BACK_FOR_REPORTS = 2;
+    private static final int DEFAULT_NUMBER_OF_RUNS_TO_LOOK_BACK_FOR_REPORTS = 5;
 
     public static class Provider implements ReportRepoProvider {
         private final Map<String, String> env;

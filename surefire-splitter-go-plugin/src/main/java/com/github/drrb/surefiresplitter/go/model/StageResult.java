@@ -38,14 +38,18 @@ public class StageResult {
     @SerializedName("counter")
     public final String stageCounter;
 
+    @SerializedName("result")
+    public final String result;
+
     public final List<JobResult> jobs;
 
-    public StageResult(String pipelineName, String pipelineCounter, String stageName, String stageCounter, List<JobResult> jobs) {
+    public StageResult(String pipelineName, String pipelineCounter, String stageName, String stageCounter, List<JobResult> jobs, String result) {
         this.pipelineName = pipelineName;
         this.pipelineCounter = pipelineCounter;
         this.stageName = stageName;
         this.stageCounter = stageCounter;
         this.jobs = Collections.unmodifiableList(new ArrayList<>(jobs));
+        this.result = result;
     }
 
     public List<JobResult> getJobs() {
@@ -60,5 +64,9 @@ public class StageResult {
         } else {
             return false;
         }
+    }
+
+    public boolean isPassed() {
+        return "Passed".equals(result);
     }
 }

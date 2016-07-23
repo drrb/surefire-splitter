@@ -27,13 +27,10 @@ import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.security.KeyStore;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -143,20 +140,29 @@ public class FakeGoServer extends TestWatcher {
         List<StageResult> stages = new LinkedList<>();
         Path pipelineDir = getPipelinesDir().resolve(pipelineName);
         for (File pipelineRunDir : childrenInReverseOrder(pipelineDir)) {
-            for (File stageRunDir : childrenInReverseOrder(pipelineRunDir.toPath().resolve(stageName))) {
+            for (File stageRunDir : childrenInReverseOrder(pipelineRunDir.toPath().resolve(stageName))) {;
                 List<JobResult> jobs = new LinkedList<>();
-                for (File jobDir : stageRunDir.listFiles()) {
-                    JobResult jobResult = new JobResult(jobDir.getName());
-                    jobs.add(jobResult);
+                String result = "Unknown";
+                for (File stageFile : stageRunDir.listFiles()) {
+                    if (stageFile.isDirectory()) {
+                        JobResult jobResult = new JobResult(stageFile.getName());
+                        jobs.add(jobResult);
+                    } else if (stageFile.getName().equals("stage-result.txt")) {
+                        try {
+                            result = new String(Files.readAllBytes(stageFile.toPath()), UTF_8).trim();
+                            System.out.println("result = " + result);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                 }
-                StageResult stageResult = new StageResult(
+                stages.add(new StageResult(
                         pipelineName,
                         pipelineRunDir.getName(),
                         stageName,
                         stageRunDir.getName(),
-                        jobs
-                );
-                stages.add(stageResult);
+                        jobs,
+                        result));
             }
         }
         StageHistory stageHistory = new StageHistory(stages);

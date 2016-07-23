@@ -33,6 +33,7 @@ import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 
+import static java.lang.Math.min;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class GoServer {
@@ -65,12 +66,10 @@ public class GoServer {
 
     public List<JobRun> getPreviousJobRuns(JobRun mostRecentJobRun) throws CommunicationError {
         List<JobRun> previousJobRuns = new LinkedList<>();
-        for (StageResult stageResult : getPreviousStageRuns(mostRecentJobRun.pipelineName, mostRecentJobRun.stageName)) {
-            if (stageResult.isBefore(mostRecentJobRun.pipelineCounter, mostRecentJobRun.stageCounter)) {
-                for (JobResult jobResult : stageResult.getJobs()) {
-                    if (jobResult.isInstanceOf(mostRecentJobRun.jobName)) {
-                        previousJobRuns.add(new JobRun(stageResult.pipelineName, stageResult.pipelineCounter, stageResult.stageName, stageResult.stageCounter, jobResult.jobName));
-                    }
+        for (StageResult stageResult : getPreviousStageHistoryUntilMostRecentPassed(mostRecentJobRun)) {
+            for (JobResult jobResult : stageResult.getJobs()) {
+                if (jobResult.isInstanceOf(mostRecentJobRun.jobName)) {
+                    previousJobRuns.add(new JobRun(stageResult.pipelineName, stageResult.pipelineCounter, stageResult.stageName, stageResult.stageCounter, jobResult.jobName));
                 }
             }
         }
@@ -83,16 +82,30 @@ public class GoServer {
         return downloadAll(filesToDownload);
     }
 
-    private List<StageResult> getPreviousStageRuns(String pipelineName, String stageName) throws CommunicationError {
-        try (ResponseBody response = get(url("/api/stages/%s/%s/history", pipelineName, stageName))) {
-            List<StageResult> stages = StageHistory.fromJson(response.string()).getStages();
-            if (stages.size() <= numberOfRunsToLookBackForReports) {
-                return stages;
-            } else {
-                return stages.subList(0, numberOfRunsToLookBackForReports);
+    private List<StageResult> getPreviousStageHistoryUntilMostRecentPassed(JobRun mostRecentJobRun) throws CommunicationError {
+        List<StageResult> result = new LinkedList<>();
+        List<StageResult> previousStageRuns = getPreviousStageRuns(mostRecentJobRun);
+        for (StageResult previousStageRun :  previousStageRuns.subList(0, min(previousStageRuns.size(), numberOfRunsToLookBackForReports))) {
+            result.add(previousStageRun);
+            if (previousStageRun.isPassed()) {
+                break;
             }
+        }
+        return result;
+    }
+
+    private List<StageResult> getPreviousStageRuns(JobRun jobRun) throws CommunicationError {
+        try (ResponseBody response = get(url("/api/stages/%s/%s/history", jobRun.pipelineName, jobRun.stageName))) {
+            List<StageResult> allStageRuns = StageHistory.fromJson(response.string()).getStages();
+            List<StageResult> previousStageRuns = new LinkedList<>();
+            for (StageResult stageRun : allStageRuns) {
+                if (stageRun.isBefore(jobRun.pipelineCounter, jobRun.stageCounter)) {
+                    previousStageRuns.add(stageRun);
+                }
+            }
+            return previousStageRuns;
         } catch (IOException e) {
-            throw new CommunicationError(String.format("Failed to download stage history for %s/%s", pipelineName, stageName));
+            throw new CommunicationError(String.format("Failed to download stage history for %s/%s", jobRun.pipelineName, jobRun.stageName));
         }
     }
 

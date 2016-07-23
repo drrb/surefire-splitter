@@ -106,7 +106,7 @@ public class GoReportRepoTest {
     }
 
     @Test
-    public void shouldGetTestReportsFromPreviousRunsOfTheTargetJob() throws Exception {
+    public void shouldGetTestReportsFromPreviousRunsOfTheTargetJobBackToTheLastPassedOne() throws Exception {
         Map<String, String> nextRunEnv = new HashMap<>(ENV_ON_GO);
         nextRunEnv.put("GO_PIPELINE_COUNTER", "543");
         GoReportRepo.Provider provider = new GoReportRepo.Provider(nextRunEnv, workingDir);
